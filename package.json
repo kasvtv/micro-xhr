@@ -1,0 +1,27 @@
+{
+  "name": "micro-xhr",
+  "version": "1.0.0",
+  "description": "A tiny library for interfacing XMLHttpRequest through a promise",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kasvtv/micro-xhr.git"
+  },
+  "keywords": [
+    "xhr",
+    "XMLHttpRequest",
+    "promise"
+  ],
+  "author": "Kas van 't Veer",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kasvtv/micro-xhr/issues"
+  },
+  "homepage": "https://github.com/kasvtv/micro-xhr#readme"
+}
