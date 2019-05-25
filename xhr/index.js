@@ -1,13 +1,13 @@
 var parseRequestHeaders = require('micro-xhr/lib/parseRequestHeaders');
 
 function isJson(headers) {
-	return (headers['content-type'] || '').indexOf('application/json') !== -1;
+	return (headers['content-type'] || '').toLowerCase().indexOf('application/json') !== -1;
 }
 
 module.exports = function xhrWrapper(args) {
 	var xhr;
 	var promise = new Promise(function(resolve) {
-		xhr = new XMLHttpRequest();
+		xhr = args.xhrInstance || new XMLHttpRequest();
 	
 		xhr.open(args.method || 'get', args.url);
 		
@@ -17,18 +17,12 @@ module.exports = function xhrWrapper(args) {
 			xhr.setRequestHeader(name.toLowerCase(), lowercaseHeaders[name]);
 		}
 
-		xhr.send(
-			isJson(lowercaseHeaders) && args.data && typeof args.data === 'object'
-				? JSON.stringify(args.data)
-				: args.data
-		);
-
 		xhr.onreadystatechange = function () {
 			if (xhr.readyState === this.DONE) {
 				var responseHeaders = {};
 				
 				xhr.getAllResponseHeaders()
-				.split('\n')
+				.split(/(\r)?\n/)
 				.forEach(function(x) {
 					if (!x) return;
 					var separator = x.indexOf(': ');
@@ -46,6 +40,12 @@ module.exports = function xhrWrapper(args) {
 				});
 			}
 		};
+
+		xhr.send(
+			isJson(lowercaseHeaders) && args.data && typeof args.data === 'object'
+				? JSON.stringify(args.data)
+				: args.data
+		);
 	});
 
 	promise.xhr = xhr;

@@ -6,6 +6,8 @@ module.exports = function xhrRequest(args) {
 	var ret = promise.then(function(resp) {
 		if (resp.status < 200 || resp.status > 299) {
 			throw resp;
+		} else {
+			return resp;
 		}
 	});
 
