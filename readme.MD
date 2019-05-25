@@ -1,6 +1,7 @@
 [![NPM version](https://img.shields.io/npm/v/micro-xhr.svg?style=flat)](https://www.npmjs.org/package/micro-xhr)
 [![install size](https://packagephobia.now.sh/badge?p=micro-xhr)](https://packagephobia.now.sh/result?p=micro-xhr)
-
+[![Build Status](https://travis-ci.com/kasvtv/micro-xhr.svg?branch=master)](https://travis-ci.com/kasvtv/micro-xhr)
+[![Coverage Status](https://coveralls.io/repos/github/kasvtv/micro-xhr/badge.svg?branch=master)](https://coveralls.io/github/kasvtv/micro-xhr?branch=master)
 
 # micro-xhr
 
