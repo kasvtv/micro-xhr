@@ -7,7 +7,7 @@
     "**/!(*.test|*.conf).js"
   ],
   "scripts": {
-    "test": "jest"
+    "test": "jest --coverage --coverageReporters=text-lcov | coveralls"
   },
   "repository": {
     "type": "git",
@@ -26,6 +26,7 @@
   "homepage": "https://github.com/kasvtv/micro-xhr#readme",
   "devDependencies": {
     "@types/jest": "^24.0.13",
+    "coveralls": "^3.0.3",
     "jest": "^24.8.0"
   }
 }
