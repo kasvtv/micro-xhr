@@ -1,4 +1,5 @@
 [![NPM version](https://img.shields.io/npm/v/micro-xhr.svg?style=flat)](https://www.npmjs.org/package/micro-xhr)
+[![install size](https://packagephobia.now.sh/badge?p=micro-xhr)](https://packagephobia.now.sh/result?p=micro-xhr)
 
 
 # micro-xhr
