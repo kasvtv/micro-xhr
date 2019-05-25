@@ -2,6 +2,8 @@
 [![install size](https://packagephobia.now.sh/badge?p=micro-xhr)](https://packagephobia.now.sh/result?p=micro-xhr)
 [![Build Status](https://travis-ci.com/kasvtv/micro-xhr.svg?branch=master)](https://travis-ci.com/kasvtv/micro-xhr)
 [![Coverage Status](https://coveralls.io/repos/github/kasvtv/micro-xhr/badge.svg?branch=master)](https://coveralls.io/github/kasvtv/micro-xhr?branch=master)
+[![Dependency Status](https://david-dm.org/dwyl/esta.svg)](https://david-dm.org/dwyl/esta)
+[![Known Vulnerabilities](https://snyk.io/test/github/dwyl/hapi-auth-jwt2/badge.svg?targetFile=package.json)](https://snyk.io/test/github/dwyl/hapi-auth-jwt2?targetFile=package.json)
 
 # micro-xhr
 
