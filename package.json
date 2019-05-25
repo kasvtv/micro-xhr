@@ -1,11 +1,11 @@
 {
   "name": "micro-xhr",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A tiny library for interfacing XMLHttpRequest through a promise",
   "main": "index.js",
-  "directories": {
-    "lib": "lib"
-  },
+  "files": [
+    "**/!(*.test|*.conf).js"
+  ],
   "scripts": {
     "test": "jest"
   },
