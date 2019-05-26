@@ -1,0 +1,9 @@
+{
+	"editor.defaultFormatter": "HookyQR.beautify",
+	"eslint.enable": true,
+	"eslint.autoFixOnSave": true,
+	"eslint.alwaysShowStatus": true,
+	"eslint.options": {
+		"fixTypes": ["layout"]
+	}
+}
