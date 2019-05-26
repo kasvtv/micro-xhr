@@ -20,7 +20,7 @@ module.exports = {
 	//parser: "babel-eslint",
 	parserOptions: {
 		sourceType: "module",
-		ecmaVersion: 5 //9,
+		ecmaVersion: 9,
 		ecmaFeatures: {
 			impliedStrict: true,
 			//jsx: true,
@@ -297,7 +297,7 @@ module.exports = {
 		"prefer-spread": "off",
 		"prefer-template": "off",
 		"quote-props": "off",
-		"quotes": "off",
+		"quotes": ["warn", "single", { "avoidEscape": true }],
 		"radix": "off",
 		"require-atomic-updates": "warn",
 		"require-await": "warn",

@@ -1,5 +1,5 @@
 [![NPM version](https://img.shields.io/npm/v/micro-xhr.svg?style=flat)](https://www.npmjs.org/package/micro-xhr)
-[![install size](https://packagephobia.now.sh/badge?p=micro-xhr)](https://packagephobia.now.sh/result?p=micro-xhr)
+[![Size](https://badgen.net/bundlephobia/minzip/micro-xhr)](https://bundlephobia.com/result?p=micro-xhr)
 [![Build Status](https://travis-ci.com/kasvtv/micro-xhr.svg?branch=master)](https://travis-ci.com/kasvtv/micro-xhr)
 [![Coverage Status](https://coveralls.io/repos/github/kasvtv/micro-xhr/badge.svg?branch=master)](https://coveralls.io/github/kasvtv/micro-xhr?branch=master)
 [![Dependency Status](https://david-dm.org/dwyl/esta.svg)](https://david-dm.org/dwyl/esta)
@@ -20,9 +20,9 @@ npm install micro-xhr
 ## Usage
 
 ```js
-const microXhr = require('micro-xhr');
+const xhr = require('micro-xhr');
 
-const myRequest = microXhr({
+const myRequest = xhr({
     url: 'https://domain.com',
     method: 'post',
     headers: {
@@ -44,7 +44,7 @@ myRequest.xhr.abort(); // abort the request
 
 ```
 
-## API: micro-xhr
+# API: micro-xhr
 
 ### function({url, method, headers, data}) -> result
 
@@ -52,17 +52,27 @@ Perform an HTTP(S) request to the given url, with the given method, headers and 
 
 #### arguments
 - **requestObject** *(Object)*
-  - **url** *(string)*: URL to perform the request to
-  - **method** *(string)*: HTTP method to use (defaults to GET)
-  - **headers** *(Object)*: Headers to use, keys are case insensitive and `content-type` defaults to `application/json`
-  - **data** *(any)*: Request payload to send. Automatically stringifies to JSON if the `content-type` header is set to `application/json`.
+  - `url` *(string)*: URL to perform the request to
+  - `method` *(string)*: HTTP method to use (defaults to GET)
+  - `headers` *(Object)*: Headers to use, keys are case insensitive and `content-type` defaults to `application/json`
+  - `data` *(any)*: Request payload to send. Automatically stringifies to JSON if the `content-type` header contains `application/json`.
 
 #### returns
-- **Promise** *(Promise)*: Promise that once the request finalizes will resolve in case of an OK status and reject in all other cases.
+- *(Promise)*: Resolves when the request finalizes, except in case of a non-2XX status or on parse errors
+  - ***- resolves to*** (*Object*) ***-*** 
+    - `status` (*int*): The received status code
+    - `headers` (*Object*): Received headers, all keys are lowercase
+    - `data` (*string | any*): Received response body, auto-parses JSON, else returns a string
+  - ***- or rejects to*** (*Object*) ***-*** 
+    - `status` (*int*): The received status code, 0 if request failed
+    - `headers` (*Object*): Received headers, all keys are lowercase
+    - `data` (*string | any*)?: Received response body, auto-parses JSON, else returns a string
+    - `error` (*Error*)?: Returned instead of `data` an exception occurs during parsing
+        - `rawBody` (*string*): Unparsed response body
   - **xhr** *(XmlHttpRequest)*: The underlying XMLHttpRequest
 
-## API: micro-xhr/xhr
+# API: micro-xhr/xhr
 
 ### function({url, method, headers, data}) -> result
 
-The same as `micro-xhr`, except that the promise is always resolved. Called internally by `micro-xhr`
+The same as `micro-xhr`, except that the promise still resolves on a non-2XX status. Called internally by `micro-xhr`
