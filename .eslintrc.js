@@ -20,7 +20,7 @@ module.exports = {
 	//parser: "babel-eslint",
 	parserOptions: {
 		sourceType: "module",
-		ecmaVersion: 5,
+		ecmaVersion: 5 //9,
 		ecmaFeatures: {
 			impliedStrict: true,
 			//jsx: true,
