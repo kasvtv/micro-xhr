@@ -26,11 +26,10 @@
 	"homepage": "https://github.com/kasvtv/micro-xhr#readme",
 	"devDependencies": {
 		"@types/jest": "^24.0.13",
-		"jest": "^24.8.0"
-	},
-	"dependencies": {
 		"es-check": "^5.0.0",
 		"eslint": "^5.16.0",
-		"eslint-plugin-import": "^2.17.3"
-	}
+		"eslint-plugin-import": "^2.17.3",
+		"jest": "^24.8.0"
+	},
+	"dependencies": {}
 }
