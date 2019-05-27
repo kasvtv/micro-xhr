@@ -69,7 +69,7 @@ Perform an HTTP(S) request to the given url, with the given method, headers and 
     - `data` (*string | any*)?: Received response body, auto-parses JSON, else returns a string
     - `error` (*Error*)?: Returned instead of `data` an exception occurs during parsing
         - `rawBody` (*string*): Unparsed response body
-  - **xhr** *(XmlHttpRequest)*: The underlying XMLHttpRequest
+  - `xhr` *(XmlHttpRequest)*: The underlying XMLHttpRequest
 
 # API: micro-xhr/xhr
 
