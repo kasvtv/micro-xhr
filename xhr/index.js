@@ -57,8 +57,8 @@ module.exports = function xhrWrapper(args) {
 
 		xhr.send(
 			isJson(lowercaseHeaders)
-			? JSON.stringify(args.data)
-			: args.data
+				? JSON.stringify(args.data)
+				: args.data
 		);
 	});
 

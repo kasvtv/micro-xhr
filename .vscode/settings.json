@@ -1,9 +1,14 @@
 {
-	"editor.defaultFormatter": "HookyQR.beautify",
+	"[javascript]": {
+		"editor.formatOnSave": false,
+	},
 	"eslint.enable": true,
 	"eslint.autoFixOnSave": true,
+	"eslint.hideAutoFixedIssues": true,
 	"eslint.alwaysShowStatus": true,
 	"eslint.options": {
-		"fixTypes": ["layout"]
-	}
+		"fixTypes": [
+			"layout", "suggestion"
+		]
+	},
 }
