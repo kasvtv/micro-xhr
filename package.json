@@ -37,6 +37,6 @@
 	},
 	"dependencies": {},
 	"eslintIgnore": [
-		".eslintrc.js"
+		"!.eslintrc.js"
 	]
 }
