@@ -1,40 +1,57 @@
+/* User defined constants */
+const ecmaVersion = 9;
+const minEcmaVersion = 5;
+const babel = false;
+const react = false;
+const jest = true;
+const browser = true;
+const node = true;
+const imports = true;
+const alwaysStyle = true;
+const indentSetting = "tab";
+/* End of user defined constants */
+
 const path = require("path");
+const reactVersion = react && require("react").version;
 const importPath = require("./jsconfig.json").compilerOptions.baseUrl;
 
-const production = (process.env.NODE_ENV || "").includes("production") ? 2 : 0;
-const production_warn = production ? 1 : 0;
-const production_error_else_warn = production ? 2 : 1;
+const env = process.env.NODE_ENV || "";
+const isInProductionMode = env.includes("production");
+const production_warn = isInProductionMode ? "warn" : "off";
+const production_error = isInProductionMode ? "error" : "warn";
+const isInStylingMode = env.includes("styl");
+const isStylingExplicitlyDisabled = env.includes("no-styl");
+const style = (alwaysStyle || isInStylingMode) && !isStylingExplicitlyDisabled ? "warn" : "off";
 
-const style = "warn";
-const es6 = false;
 
 module.exports = {
 	env: {
-		browser: true,
-		es6: true,
+		browser,
+		es6: ecmaVersion >= 6,
 		commonjs: true,
-		node: true,
-		jest: true,
+		node,
+		jest,
 	},
-	extends: [
+	extends: [].concat(
 		"eslint:recommended",
-		//"plugin:react/recommended",
-	],
-	//parser: "babel-eslint",
+		jest ? "plugin:jest/recommended" : [],
+		react ? "plugin:react/recommended" : [],
+	),
+	parser: babel ? "babel-eslint" : null,
 	parserOptions: {
 		sourceType: "module",
-		ecmaVersion: 9,
+		ecmaVersion,
 		ecmaFeatures: {
 			impliedStrict: true,
-			//jsx: true,
+			jsx: react,
 		},
 	},
-	plugins: [
-		"import",
-		/*"react",
-		"react-hooks",*/
-	],
-	rules: {
+	plugins: [].concat(
+		jest ? "jest" : [],
+		react ? ["react", "react-hooks"] : [],
+		imports ? "import" : []
+	),
+	rules: Object.assign({
 		"accessor-pairs": "warn",
 		"array-bracket-newline": [style, "consistent"],
 		"array-bracket-spacing": "off",
@@ -73,7 +90,7 @@ module.exports = {
 				objects: "always-multiline",
 				imports: "always-multiline",
 				exports: "always-multiline",
-				functions: es6 ? "always-multiline" : "ignore",
+				functions: minEcmaVersion >= 6 ? "always-multiline" : "ignore",
 			}
 		],
 		"comma-spacing": style,
@@ -104,7 +121,7 @@ module.exports = {
 		"id-length": "off",
 		"id-match": "off",
 		"implicit-arrow-linebreak": [style, "beside"],
-		"indent": [style, "tab"],
+		"indent": [style, indentSetting, { ignoredNodes: ["JSXElement *", "JSXElement"] }],
 		"init-declarations": "off",
 		"jsx-quotes": [style, "prefer-single"],
 		"key-spacing": style,
@@ -134,7 +151,7 @@ module.exports = {
 		],
 		"new-parens": "warn",
 		"newline-per-chained-call": [style, { ignoreChainWithDepth: 3 }],
-		"no-alert": production_warn,
+		"no-alert": "warn",
 		"no-array-constructor": "off",
 		"no-async-promise-executor": "error",
 		"no-await-in-loop": "off",
@@ -152,7 +169,7 @@ module.exports = {
 		"no-constant-condition": "off",
 		"no-control-regex": "warn",
 		"no-delete-var": "off",
-		"no-debugger": production,
+		"no-debugger": production_error,
 		"no-div-regex": "off",
 		"no-dupe-args": "error",
 		"no-dupe-class-members": "error",
@@ -160,14 +177,14 @@ module.exports = {
 		"no-duplicate-case": "error",
 		"no-duplicate-imports": "off", // disabled in favor of import/no-duplicates
 		"no-else-return": "warn",
-		"no-empty": production,
+		"no-empty": "warn", // should have justifying comment
 		"no-empty-character-class": "warn",
 		"no-empty-function": "off",
 		"no-empty-pattern": "warn",
 		"no-eq-null": "off",
-		"no-eval": production_error_else_warn,
+		"no-eval": "error",
 		"no-ex-assign": "warn",
-		"no-extend-native": production_error_else_warn,
+		"no-extend-native": "error",
 		"no-extra-boolean-cast": "warn",
 		"no-extra-bind": "warn", // is "suggestion" -> not func eq
 		"no-extra-label": "warn", // is "suggestion" -> annoying
@@ -189,7 +206,7 @@ module.exports = {
 		"no-global-assign": "error",
 		"no-implicit-coercion": "warn",
 		"no-implicit-globals": "error",
-		"no-implied-eval": production_error_else_warn,
+		"no-implied-eval": "error",
 		"no-inline-comments": "off",
 		"no-inner-declarations": "off",
 		"no-invalid-regexp": "error",
@@ -213,7 +230,7 @@ module.exports = {
 		"no-negated-condition": "off",
 		"no-nested-ternary": "off",
 		"no-new": "off",
-		"no-new-func": production_error_else_warn,
+		"no-new-func": "error",
 		"no-new-object": "warn",
 		"no-new-require": "error",
 		"no-new-symbol": "error",
@@ -222,7 +239,7 @@ module.exports = {
 		"no-octal": "warn",
 		"no-octal-escape": "error",
 		"no-param-reassign": "warn",
-		"no-path-concat": production_error_else_warn,
+		"no-path-concat": "error",
 		"no-plusplus": "off",
 		"no-process-env": "off",
 		"no-process-exit": "off",
@@ -365,6 +382,8 @@ module.exports = {
 		"wrap-regex": "off",
 		"yield-star-spacing": [style, "before"],
 		"yoda": ["warn", "never", { exceptRange: true }],
+	},
+	imports && {
 		"import/no-unresolved": "error",
 		"import/named": "error",
 		"import/default": "error",
@@ -385,7 +404,6 @@ module.exports = {
 		"import/no-deprecated": "off",
 		"import/no-extraneous-dependencies": "warn",
 		"import/no-mutable-exports": "off",
-		"import/no-relative-parent-imports": "off",
 		"import/unambiguous": "off",
 		"import/no-commonjs": "off",
 		"import/no-amd": "off",
@@ -406,7 +424,42 @@ module.exports = {
 		"import/no-anonymous-default-export": "off",
 		"import/group-exports": "off",
 		"import/dynamic-import-chunkname": "off",
-		/*"react/boolean-prop-naming": "off",
+	},
+	jest && {
+		"jest/consistent-test-it": style,
+		"jest/expect-expect": production_warn,
+		"jest/lowercase-name": "off",
+		"jest/no-alias-methods": style,
+		"jest/no-disabled-tests": "warn",
+		"jest/no-commented-out-tests": production_warn,
+		"jest/no-empty-title": "warn",
+		"jest/no-focused-tests": production_error, // circumvents whole test suite
+		"jest/no-hooks": "off",
+		"jest/no-identical-title": "warn",
+		"jest/no-jasmine-globals": "warn",
+		"jest/no-jest-import": "warn",
+		"jest/no-mocks-import": "off",
+		"jest/no-large-snapshots": "off",
+		"jest/no-test-callback": "error", // possibility of evergreen test
+		"jest/no-test-prefixes": style,
+		"jest/no-test-return-statement": "warn",
+		"jest/no-truthy-falsy": "warn",
+		"jest/prefer-expect-assertions": "off",
+		"jest/prefer-spy-on": "warn",
+		"jest/prefer-strict-equal": "off",
+		"jest/prefer-to-be-null": style,
+		"jest/prefer-to-be-undefined": style,
+		"jest/prefer-to-contain": style,
+		"jest/prefer-to-have-length": style,
+		"jest/require-tothrow-message": "off",
+		"jest/valid-describe": "warn",
+		"jest/valid-expect-in-promise": "warn",
+		"jest/valid-expect": "warn",
+		"jest/prefer-todo": "warn",
+		"jest/prefer-called-with": "off",
+	},
+	react && {
+		"react/boolean-prop-naming": "off",
 		"react/button-has-type": "warn",
 		"react/default-props-match-prop-types": "off",
 		"react/destructuring-assignment": "off",
@@ -415,71 +468,142 @@ module.exports = {
 		"react/forbid-dom-props": "off",
 		"react/forbid-elements": "off",
 		"react/forbid-prop-types": "off",
-		"react/forbid-foreign-prop-types": "warn",
-		"react/no-access-state-in-setstate": "error",
+		"react/forbid-foreign-prop-types": "off",
+		"react/no-access-state-in-setstate": "warn",
 		"react/no-array-index-key": "off",
-		"react/no-children-prop": "error",
-		"react/no-danger": production_error_else_warn,
-		"react/no-danger-with-children": production_error_else_warn,
-		"react/no-deprecated": production_error_else_warn,
+		"react/no-children-prop": "warn",
+		"react/no-danger": production_error,
+		"react/no-danger-with-children": production_error,
+		"react/no-deprecated": "error",
 		"react/no-did-mount-set-state": "error",
 		"react/no-did-update-set-state": "error",
 		"react/no-direct-mutation-state": "error",
-		"react/no-find-dom-node": production_error_else_warn,
-		"react/no-is-mounted": "error",
+		"react/no-find-dom-node": "warn",
+		"react/no-is-mounted": "warn",
 		"react/no-multi-component": "off",
 		"react/no-redundant-should-component-update": "error",
 		"react/no-render-return-value": "warn",
 		"react/no-set-state": "off",
 		"react/no-typos": "warn",
-		"react/no-string-refs": production_error_else_warn,
+		"react/no-string-refs": "warn",
 		"react/no-this-in-sfc": "error",
 		"react/no-unescaped-entities": [
 			"warn",
 			{
 				forbid: [
 					"<", ">",
-					'"', "'",
-					"[", "]",
-					"{", "}",
-					",", ".", ";",
-					"?", ":",
-					"|", "&",
 					"||", "&&",
-				]
-			}
+				],
+			},
 		],
 		"react/no-unknown-property": "warn",
-		"react/no-unsafe": production_error_else_warn,
+		"react/no-unsafe": "error",
 		"react/no-unused-state": "warn",
 		"react/no-unused-prop-types": "warn",
 		"react/no-will-update-set-state": "error",
-		"react/prefer-es6-class": "error",
+		"react/prefer-es6-class": minEcmaVersion >= 6 ? "error" : "off",
 		"react/prefer-read-only-props": "off",
 		"react/prefer-stateless-function": "warn",
 		"react/prop-types": "off",
 		"react/react-in-jsx-scope": "error",
 		"react/require-default-props": "off",
 		"react/require-optimization": "off",
-		"react/require-render-return": "error",
+		"react/require-render-return": "warn",
 		"react/self-closing-comp": "off",
 		"react/sort-comp": "off",
 		"react/sort-prop-types": "off",
 		"react/state-in-constructor": "off",
 		"react/style-prop-object": "error",
-		"react/void-dom-elements-no-children": "warn",
+		"react/void-dom-elements-no-children": "error",
+		"react/jsx-boolean-value": "off",
+		"react/jsx-child-element-spacing": "off",
+		"react/jsx-closing-bracket-location": style,
+		"react/jsx-closing-tag-location": "off",
+		"react/jsx-curly-spacing": [
+			style,
+			{
+				when: "always",
+				spacing: { objectLiterals: "never" },
+			},
+		],
+		"react/jsx-equals-spacing": style,
+		"react/jsx-filename-extension": "off",
+		"react/jsx-first-prop-new-line": [style, "multiline-multiprop"],
+		"react/jsx-handler-names": "off",
+		"react/jsx-indent": [
+			style,
+			indentSetting,
+			{
+				indentLogicalExpressions: true,
+				checkAttributes: true,
+			},
+		],
+		"react/jsx-indent-props": [style, indentSetting],
+		"react/jsx-key": "warn",
+		"react/jsx-max-depth": "off",
+		"react/jsx-max-props-per-line": "off",
+		"react/jsx-no-bind": [
+			style,
+			{
+				ignoreDOMComponents: true,
+				ignoreRefs: true,
+				allowArrowFunctions: true,
+				allowFunctions: true,
+				allowBind: false,
+			},
+		],
+		"react/jsx-no-comment-textnodes": "warn",
+		"react/jsx-no-duplicate-props": "error",
+		"react/jsx-no-literals": "off",
+		"react/jsx-no-target-blank": "warn",
+		"react/jsx-no-undef": "error",
+		"react/jsx-one-expression-per-line": [style, { allow: "single-child" }],
+		"react/jsx-curly-brace-presence": [style, { props: "never", children: "ignore" }],
+		"react/jsx-fragments": style,
+		"react/jsx-pascal-case": style,
+		"react/jsx-props-no-multi-spaces": style,
+		"react/jsx-props-no-spreading": "off",
+		"react/jsx-sort-default-props": "off",
+		"react/jsx-sort-props": "off",
+		"react/jsx-space-before-closing": "off", // deprecated
+		"react/jsx-tag-spacing": [
+			style,
+			{
+				closingSlash: "never",
+				beforeSelfClosing: "always",
+				afterOpening: "never",
+				beforeClosing: "never",
+			},
+		],
+		"react/jsx-uses-react": "error",
+		"react/jsx-uses-vars": "warn",
+		"react/jsx-wrap-multilines": [
+			style,
+			{
+				declaration: "ignore",
+				assignment: "ignore",
+				return: "parens",
+				arrow: "parens",
+				condition: "parens",
+				logical: "parens",
+				prop: "ignore",
+			},
+		],
 		"react-hooks/rules-of-hooks": "error",
-		"react-hooks/exhaustive-deps": "warn",*/
-	},
+		"react-hooks/exhaustive-deps": "warn",
+	}),
 	settings: {
 		"import/resolver": {
 			node: {
 				paths: [path.resolve(__dirname, importPath)],
 			},
 		},
+		"react": {
+			version: reactVersion,
+		},
 	},
 };
 
 /* To get all rules, goto: https://eslint.org/docs/rules/
- * Then: [...document.querySelectorAll('table.rule-list td:nth-child(3) p a')].map(x => x.innerHTML)
+ * Then: [...document.querySelectorAll("table.rule-list td:nth-child(3) p a")].map(x => x.innerHTML)
  */
