@@ -1,15 +1,24 @@
 /* User defined constants */
+
+/* Environment: */
 const ecmaVersion = 9;
 const minEcmaVersion = 5;
-const babel = false;
-const react = false;
-const jest = true;
 const browser = true;
-const node = true;
 const imports = true;
-const checkLayout = true;
+const node = true;
+const babel = false;
+
+/* Frameworks and libraries: */
+const react = false;
+const jquery = false;
+const jest = true;
+
+/* Styling: */
+const checkStyling = true;
 const indentSetting = 'tab';
+
 /* End of user defined constants */
+
 
 const path = require('path');
 const reactVersion = react && require('react').version; // eslint-disable-line global-require
@@ -21,16 +30,16 @@ const production_warn = isInProductionMode ? 'warn' : 'off';
 const production_error = isInProductionMode ? 'error' : 'warn';
 const isInStylingMode = env.includes('styl');
 const isStylingExplicitlyDisabled = env.includes('no-styl');
-const style = (checkLayout || isInStylingMode) && !isStylingExplicitlyDisabled ? 'warn' : 'off';
+const style = (checkStyling || isInStylingMode) && !isStylingExplicitlyDisabled ? 'warn' : 'off';
 
 
 module.exports = {
 	env: {
-		browser,
 		es6: ecmaVersion >= 6,
-		commonjs: true,
+		browser,
 		node,
 		jest,
+		jquery,
 	},
 	extends: [].concat(
 		'eslint:recommended',
