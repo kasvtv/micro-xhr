@@ -4,7 +4,7 @@
 	"description": "A tiny library for interfacing XMLHttpRequest through a promise",
 	"main": "index.js",
 	"files": [
-		"**/!(*.test|*.conf).js"
+		"**/!(*.test|*.conf|.*).js"
 	],
 	"scripts": {
 		"test": "npm run lint && npm run es-check && jest",
