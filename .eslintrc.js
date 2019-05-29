@@ -130,7 +130,14 @@ module.exports = {
 		'id-length': 'off',
 		'id-match': 'off',
 		'implicit-arrow-linebreak': [style, 'beside'],
-		'indent': [style, indentSetting, { ignoredNodes: ['JSXElement *', 'JSXElement'] }],
+		'indent': [
+			style,
+			indentSetting,
+			{
+				ignoredNodes: ['JSXElement'],
+				flatTernaryExpressions: true,
+			},
+		],
 		'init-declarations': 'off',
 		'jsx-quotes': [style, 'prefer-single'],
 		'key-spacing': style,
@@ -197,17 +204,7 @@ module.exports = {
 		'no-extra-boolean-cast': 'warn',
 		'no-extra-bind': 'warn', // is "suggestion" -> not func eq
 		'no-extra-label': 'warn', // is "suggestion" -> annoying
-		'no-extra-parens': [
-			'warn',
-			'all',
-			{
-				conditionalAssign: false,
-				returnAssign: false,
-				nestedBinaryExpressions: false,
-				ignoreJSX: 'multi-line',
-				enforceForArrowConditionals: false,
-			},
-		],
+		'no-extra-parens': 'off', // useful for unambiguity
 		'no-extra-semi': 'warn',
 		'no-fallthrough': 'warn',
 		'no-floating-decimal': style,
@@ -231,7 +228,7 @@ module.exports = {
 		'no-misleading-character-class': 'warn',
 		'no-mixed-operators': 'off',
 		'no-mixed-requires': 'warn',
-		'no-mixed-spaces-and-tabs': 'off',
+		'no-mixed-spaces-and-tabs': style,
 		'no-multi-assign': 'off',
 		'no-multi-spaces': style,
 		'no-multi-str': 'off',
@@ -271,7 +268,7 @@ module.exports = {
 		'no-shadow-restricted-names': 'error',
 		'no-sparse-arrays': 'warn',
 		'no-sync': 'off',
-		'no-tabs': 'off',
+		'no-tabs': [style, { allowIndentationTabs: indentSetting === 'tab' }],
 		'no-template-curly-in-string': 'warn',
 		'no-ternary': 'off',
 		'no-this-before-super': 'warn',
@@ -381,7 +378,7 @@ module.exports = {
 		'strict': 'off',
 		'switch-colon-spacing': style,
 		'symbol-description': 'warn',
-		'template-curly-spacing': [style, 'always'],
+		'template-curly-spacing': [style, 'never'],
 		'template-tag-spacing': style,
 		'unicode-bom': ['error', 'never'],
 		'use-isnan': 'error',
@@ -518,7 +515,13 @@ module.exports = {
 		'react/require-default-props': 'off',
 		'react/require-optimization': 'off',
 		'react/require-render-return': 'warn',
-		'react/self-closing-comp': 'off',
+		'react/self-closing-comp': [
+			style,
+			{
+				component: true,
+				html: true,
+			},
+		],
 		'react/sort-comp': 'off',
 		'react/sort-prop-types': 'off',
 		'react/state-in-constructor': 'off',
@@ -528,13 +531,7 @@ module.exports = {
 		'react/jsx-child-element-spacing': 'off',
 		'react/jsx-closing-bracket-location': style,
 		'react/jsx-closing-tag-location': 'off',
-		'react/jsx-curly-spacing': [
-			style,
-			{
-				when: 'always',
-				spacing: { objectLiterals: 'never' },
-			},
-		],
+		'react/jsx-curly-spacing': style,
 		'react/jsx-equals-spacing': style,
 		'react/jsx-filename-extension': 'off',
 		'react/jsx-first-prop-new-line': [style, 'multiline-multiprop'],
@@ -589,13 +586,13 @@ module.exports = {
 		'react/jsx-wrap-multilines': [
 			style,
 			{
-				declaration: 'ignore',
-				assignment: 'ignore',
-				return: 'parens',
-				arrow: 'parens',
-				condition: 'parens',
-				logical: 'parens',
-				prop: 'ignore',
+				declaration: 'parens-new-line',
+				assignment: 'parens-new-line',
+				return: 'parens-new-line',
+				arrow: 'parens-new-line',
+				condition: 'parens-new-line',
+				logical: 'parens-new-line',
+				prop: 'parens-new-line',
 			},
 		],
 		'react-hooks/rules-of-hooks': 'error',
@@ -613,6 +610,6 @@ module.exports = {
 	},
 };
 
-/* To get all rules, goto: https://eslint.org/docs/rules/
+/* To get all rules (to check for updates/deprecations), goto: https://eslint.org/docs/rules/
  * Then: [...document.querySelectorAll("table.rule-list td:nth-child(3) p a")].map(x => x.innerHTML)
  */

@@ -2,8 +2,8 @@
 [![Size](https://badgen.net/bundlephobia/minzip/micro-xhr)](https://bundlephobia.com/result?p=micro-xhr)
 [![Build Status](https://travis-ci.com/kasvtv/micro-xhr.svg?branch=master)](https://travis-ci.com/kasvtv/micro-xhr)
 [![Coverage Status](https://coveralls.io/repos/github/kasvtv/micro-xhr/badge.svg?branch=master)](https://coveralls.io/github/kasvtv/micro-xhr?branch=master)
-[![Dependency Status](https://david-dm.org/dwyl/esta.svg)](https://david-dm.org/dwyl/esta)
-[![Known Vulnerabilities](https://snyk.io/test/github/dwyl/hapi-auth-jwt2/badge.svg?targetFile=package.json)](https://snyk.io/test/github/dwyl/hapi-auth-jwt2?targetFile=package.json)
+[![Dependency Status](https://david-dm.org/kasvtv/micro-xhr.svg)](https://david-dm.org/kasvtv/micro-xhr)
+[![Known Vulnerabilities](https://snyk.io/test/github/kasvtv/micro-xhr/badge.svg?targetFile=package.json)](https://snyk.io/test/github/kasvtv/micro-xhr?targetFile=package.json)
 
 # micro-xhr
 
